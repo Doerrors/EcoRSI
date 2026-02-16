@@ -6,5 +6,5 @@ EcoRsi is a package developed to compute the Ecological Restoration Index (RSI) 
 
 **Akilprasath**: First author, Field data, Domain expert (akilprasath13@gmail.com).
 
-**$Harishwaran$**: Second author, data analysis, R-package developer (harishwaranvl5@gmail.com).
+**Harishwaran**: Second author, data analysis, R-package developer (harishwaranvl5@gmail.com).
 
