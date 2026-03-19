@@ -1,7 +1,7 @@
 Package: EcoRSI
 Type: Package
 Title: EcoRSI Package
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Harishwaran", role = c("aut", "cre"), email = "test@test.com")
 Description: Computes Relative Sustainability Index (RSI).
 License: MIT
