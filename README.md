@@ -1,23 +1,12 @@
-<<<<<<< HEAD
-# EcoRSI <img src="https://img.shields.io/badge/language-R-blue.svg" align="right"/>
-
-> **Restoration State Index (RSI) — A reference ecosystem-based framework for quantifying ecological recovery**
-=======
 # EcoRSI 
 EcoRsi is a package developed to compute the Ecological Restoration Index (RSI) of ecological sites with respect to worst and best sites as reference.
->>>>>>> 62196a8aae30554051ce064a43444c2e140a965a
+
 
 EcoRSI provides a principled, reproducible workflow for computing the **Restoration State Index (RSI)**: a composite, multidimensional measure of how closely a restoration site has converged toward a reference ecosystem, relative to a degraded baseline.
 
-<<<<<<< HEAD
 ---
 
 ## Table of Contents
-=======
-**Harishwaran**: data analysis, R-package developer (harishwaranvl5@gmail.com).
-
-**Akilprasath**: Field data, Domain expert (akilprasath13@gmail.com).
->>>>>>> 62196a8aae30554051ce064a43444c2e140a965a
 
 - [Background](#background)
 - [Installation](#installation)
