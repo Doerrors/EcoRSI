@@ -319,7 +319,7 @@ result_weighted <- computeRSI(
 If you use EcoRSI in your research, please cite:
 
 ```
-Harishwaran V (2025). EcoRSI: Restoration State Index for Ecological Recovery Assessment.
+Akil Prasath R V , Harishwaran V. EcoRSI: Restoration State Index for Ecological Recovery Assessment.
 R package. https://github.com/Doerrors/EcoRSI
 ```
 
