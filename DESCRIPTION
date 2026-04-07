@@ -1,9 +1,16 @@
 Package: EcoRSI
 Type: Package
+<<<<<<< HEAD
 Title: Restoration State Index for Ecological Recovery Assessment
 Version: 0.1.1
 Authors@R: person("Harishwaran", role = c("aut", "cre"), email = "harishwaranvl5@gmail.com")
 Description: Computes the Restoration State Index (RSI), a composite reference ecosystem-based framework for quantifying ecological recovery trajectories across multidimensional indicators.
+=======
+Title: EcoRSI Package
+Version: 0.1.1
+Authors@R: person("Harishwaran", role = c("aut", "cre"), email = "test@test.com")
+Description: Computes Relative Sustainability Index (RSI).
+>>>>>>> 62196a8aae30554051ce064a43444c2e140a965a
 License: MIT
 Encoding: UTF-8
 LazyData: true
