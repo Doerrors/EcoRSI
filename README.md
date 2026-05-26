@@ -199,24 +199,31 @@ print(result)
 ### Step 4 — Visualize recovery trajectories
 
 ```r
-library(ggplot2)
+# Setting explicit factor levels to arrange x-axis categories in order
+result$Site <- factor(result$Site, levels = c("UMD", "RS1", "RS2", "RE"))
 
-# Filter to restoration sites only (exclude UMD and RE)
-plot_data <- result[!result$Site %in% c("UMD", "RE"), ]
+# Custom color hex codes for reference.
+custom_colors <- c(
+  "UMD" = "#A07135",  # Brownish
+  "RS1" = "#E3C485",  # Light Sandy Yellow
+  "RS2" = "#71C5C1",  # Teal/Light Blue
+  "RE"  = "#26827D"   # Deep Teal
+)
 
-ggplot(plot_data, aes(x = Index, y = RSI, color = Site, group = Site)) +
-  geom_line(linewidth = 1.2) +
-  geom_point(size = 3) +
-  geom_hline(yintercept = 1, linetype = "dashed", color = "darkgreen", linewidth = 0.8) +
-  scale_y_continuous(limits = c(0, 1.05)) +
+ggplot(result, aes(x = Site, y = RSI, fill = Site)) +
+  # Creating boxplot 
+  geom_boxplot(color = "#333333", outlier.shape = NA, width = 0.6) +
+  scale_fill_manual(values = custom_colors) +
+  theme_classic(base_size = 14) +
   labs(
-    title    = "Ecological Recovery Trajectories (EcoRSI)",
-    subtitle = "RSI = 1 indicates full convergence with Reference Ecosystem",
-    x        = "Index",
-    y        = "Restoration State Index (RSI)",
-    color    = "Site"
+    x = "Categories",
+    y = "RSI Value"
   ) +
-  theme_minimal(base_size = 13)
+  theme(
+    legend.position = "none", # Hides legend as the x-axis already labels the categories
+    axis.line = element_line(color = "black"),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.8)
+  )
 ```
 
 ---
