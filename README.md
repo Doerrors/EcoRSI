@@ -12,7 +12,7 @@ EcoRSI provides a principled, reproducible workflow for computing the **Restorat
 - [Installation](#installation)
 - [How It Works](#how-it-works)
 - [Core Idea](#Core-Idea)
-- [Full Worked Example (Quick Start)](#full-worked-example)
+- [Full Worked Example (Quick start)](#full-worked-example-(Quick-Start))
 - [Function Reference](#function-reference)
 - [Custom Domain Weights](#custom-domain-weights)
 - [Output Structure](#output-structure)
