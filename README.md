@@ -11,8 +11,8 @@ EcoRSI provides a principled, reproducible workflow for computing the **Restorat
 - [Background](#background)
 - [Installation](#installation)
 - [How It Works](#how-it-works)
-- [Quick Start](#quick-start)
-- [Full Worked Example](#full-worked-example)
+- [Core Idea](#Core-Idea)
+- [Full Worked Example (Quick Start)](#full-worked-example)
 - [Function Reference](#function-reference)
 - [Custom Domain Weights](#custom-domain-weights)
 - [Output Structure](#output-structure)
@@ -102,7 +102,7 @@ By default, equal weights are applied: `w_k = 1/K`. Custom weights can be suppli
 
 ---
 
-## Quick Start
+## Core Idea
 
 ```r
 library(EcoRSI)
@@ -129,7 +129,7 @@ head(result)
 
 ---
 
-## Full Worked Example
+## Full Worked Example (Quick Start)
 
 ### Step 1 — Prepare your data
 
