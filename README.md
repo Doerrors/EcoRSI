@@ -38,6 +38,8 @@ EcoRSI is not yet on CRAN. Install directly from GitHub:
 
 ```r
 # install.packages("devtools")  # if not already installed
+# install.packages("ggplot2")   # if not already installed
+
 devtools::install_github("Doerrors/EcoRSI")
 ```
 
