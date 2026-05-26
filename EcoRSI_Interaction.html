@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoRSI: Peer-Review Interactive Visualizer & Verification Matrix</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@4.2.4/build/index.umd.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen antialiased">
+
+    <header class="bg-white border-b border-slate-200 px-8 py-5 shadow-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <span class="text-xs uppercase font-bold tracking-wider text-teal-700 font-mono">Methodological Supplementary Material</span>
+                <h1 class="text-2xl font-serif font-semibold text-slate-900 mt-0.5">
+                    The Ecological Restoration State Index (EcoRSI) Workflow Model
+                </h1>
+                <p class="text-sm text-slate-600 mt-1 max-w-3xl">
+                    An interactive companion application demonstrating multidimensional convergence analysis. Quantifying ecological recovery trajectories relative to a degraded baseline (UMD) and a reference ecosystem (RE).
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-6 space-y-6">
+            <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm flex flex-col">
+                <div class="mb-4">
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 font-serif">Table 1: Input Matrix & Dynamic Variable Verification Matrix</h2>
+                    <p class="text-xs text-slate-500 mt-1">
+                        Direct simulation array mapping all 12 core observations across 4 standalone environmental domains. Edit cells inline to audit the real-time structural stability of the index.
+                    </p>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-200 rounded-md bg-slate-50 custom-scrollbar max-h-[580px]">
+                    <table class="w-full text-left text-xs font-mono border-collapse">
+                        <thead class="bg-slate-100 text-slate-600 border-b border-slate-200 sticky top-0 z-10">
+                            <tr>
+                                <th class="p-2 border-r border-slate-200">Site</th>
+                                <th class="p-2 border-r border-slate-200 text-center">Idx</th>
+                                <th class="p-2 border-r border-slate-200 text-center text-teal-800">Floral (z+)</th>
+                                <th class="p-2 border-r border-slate-200 text-center text-teal-800">Fauna (z+)</th>
+                                <th class="p-2 border-r border-slate-200 text-center text-teal-800">N (z+)</th>
+                                <th class="p-2 border-r border-slate-200 text-center text-rose-800">Pb (z-)</th>
+                                <th class="p-2 text-right bg-teal-50 text-teal-900">RSI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="journalTableBody" class="divide-y divide-slate-200 bg-white">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-6 space-y-6">
+            
+            <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+                <div class="mb-4">
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 font-serif">Figure 1: Trajectory Profile Output</h2>
+                    <p class="text-xs text-slate-500 mt-1">
+                        Composite distribution overview mapping all active categories. Mimics native R <code>ggplot2::theme_classic()</code> geometry configurations.
+                    </p>
+                </div>
+
+                <div class="bg-white p-4 h-[350px] relative border border-slate-800">
+                    <canvas id="journalBoxPlot"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm space-y-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 font-serif border-b border-slate-200 pb-2">Mathematical Formulation Framework</h3>
+                <div class="space-y-3 text-xs text-slate-600 font-serif leading-relaxed">
+                    <div>
+                        <span class="font-bold text-slate-800 block">[Eq. 1] Positive Domain Normalization (Floral, Fauna, N):</span>
+                        <div class="bg-slate-50 p-2 rounded font-mono text-[11px] mt-1 border border-slate-200 text-slate-800">
+                            z⁺ = (X - min(UMD)) / (RE - min(UMD))
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-800 block">[Eq. 2] Negative Domain Normalization (Pb):</span>
+                        <div class="bg-slate-50 p-2 rounded font-mono text-[11px] mt-1 border border-slate-200 text-slate-800">
+                            z⁻ = (max(UMD) - X) / (max(UMD) - RE)
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-800 block">[Eq. 3] Composite Matrix Synthesis via Equal Domain-Level Weights:</span>
+                        <div class="bg-slate-50 p-2 rounded font-mono text-[11px] mt-1 border border-slate-200 text-slate-800">
+                            RSI = (I_Vegetation + I_Fauna + I_SoilNut + I_HeavyMetal) / 4
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Exact dataset layout copy from your research script matrix
+        const researchMatrix = [
+            { Site: "UMD", Index: 1,  floral: 5,  faunal: 2,  N: 0.1, Pb: 120 },
+            { Site: "UMD", Index: 5,  floral: 8,  faunal: 3,  N: 0.1, Pb: 110 },
+            { Site: "UMD", Index: 10, floral: 6,  faunal: 2,  N: 0.2, Pb: 115 },
+            { Site: "RE",  Index: 1,  floral: 30, faunal: 15, N: 0.8, Pb: 10 },
+            { Site: "RE",  Index: 5,  floral: 30, faunal: 15, N: 0.8, Pb: 10 },
+            { Site: "RE",  Index: 10, floral: 30, faunal: 15, N: 0.8, Pb: 10 },
+            { Site: "RS1", Index: 1,  floral: 12, faunal: 5,  N: 0.3, Pb: 80 },
+            { Site: "RS1", Index: 5,  floral: 18, faunal: 8,  N: 0.4, Pb: 60 },
+            { Site: "RS1", Index: 10, floral: 22, faunal: 11, N: 0.5, Pb: 40 },
+            { Site: "RS2", Index: 1,  floral: 20, faunal: 9,  N: 0.5, Pb: 50 },
+            { Site: "RS2", Index: 5,  floral: 25, faunal: 12, N: 0.6, Pb: 30 },
+            { Site: "RS2", Index: 10, floral: 28, faunal: 14, N: 0.7, Pb: 20 }
+        ];
+
+        let plotObj = null;
+
+        // Render Table Interface Elements
+        function generateJournalTable() {
+            const tbody = document.getElementById('journalTableBody');
+            tbody.innerHTML = '';
+
+            researchMatrix.forEach((row, i) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-colors border-b border-slate-100";
+                tr.innerHTML = `
+                    <td class="p-2 font-bold text-slate-700 border-r border-slate-200">${row.Site}</td>
+                    <td class="p-2 text-slate-400 text-center border-r border-slate-200">${row.Index}</td>
+                    <td class="p-1 border-r border-slate-100">
+                        <input type="number" step="any" value="${row.floral}" data-idx="${i}" data-fld="floral" class="w-full bg-transparent text-center focus:bg-white focus:outline-teal-600 rounded p-0.5">
+                    </td>
+                    <td class="p-1 border-r border-slate-100">
+                        <input type="number" step="any" value="${row.faunal}" data-idx="${i}" data-fld="faunal" class="w-full bg-transparent text-center focus:bg-white focus:outline-teal-600 rounded p-0.5">
+                    </td>
+                    <td class="p-1 border-r border-slate-100">
+                        <input type="number" step="any" value="${row.N}" data-idx="${i}" data-fld="N" class="w-full bg-transparent text-center focus:bg-white focus:outline-teal-600 rounded p-0.5">
+                    </td>
+                    <td class="p-1 border-r border-slate-200">
+                        <input type="number" step="any" value="${row.Pb}" data-idx="${i}" data-fld="Pb" class="w-full bg-transparent text-center focus:bg-white focus:outline-teal-600 rounded p-0.5">
+                    </td>
+                    <td class="p-2 font-bold text-slate-900 text-right bg-teal-50/50" id="rsi-cell-${i}">0.0000</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Input Event Watchers
+            tbody.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const index = e.target.dataset.idx;
+                    const field = e.target.dataset.fld;
+                    researchMatrix[index][field] = parseFloat(e.target.value) || 0;
+                    executeEcoRSIWorkflow();
+                });
+            });
+        }
+
+        // Process EcoRSI Matrix Transformations
+        function executeEcoRSIWorkflow() {
+            // Isolate Degraded Baseline Boundaries (UMD)
+            const umdBases = researchMatrix.filter(r => r.Site === 'UMD');
+            const min_floral = Math.min(...umdBases.map(r => r.floral));
+            const min_faunal = Math.min(...umdBases.map(r => r.faunal));
+            const min_N      = Math.min(...umdBases.map(r => r.N));
+            const max_Pb     = Math.max(...umdBases.map(r => r.Pb));
+
+            // Isolate Reference Ecosystem Arrays (RE)
+            const reBases = researchMatrix.filter(r => r.Site === 'RE');
+
+            // Data buckets matching explicit factor leveling ordering: c("UMD", "RS1", "RS2", "RE")
+            const groupings = { UMD: [], RS1: [], RS2: [], RE: [] };
+
+            researchMatrix.forEach((row, i) => {
+                const reRow = reBases.find(re => re.Index === row.Index) || { floral: 30, faunal: 15, N: 0.8, Pb: 10 };
+
+                // [Eq. 1] Positive Indicators Clamping Transformation
+                const z_floral = (reRow.floral - min_floral) !== 0 ? Math.max(0, Math.min(1, (row.floral - min_floral) / (reRow.floral - min_floral))) : 0;
+                const z_faunal = (reRow.faunal - min_faunal) !== 0 ? Math.max(0, Math.min(1, (row.faunal - min_faunal) / (reRow.faunal - min_faunal))) : 0;
+                const z_N      = (reRow.N - min_N) !== 0           ? Math.max(0, Math.min(1, (row.N - min_N) / (reRow.N - min_N))) : 0;
+
+                // [Eq. 2] Negative Indicators Clamping Transformation
+                const z_Pb     = (max_Pb - reRow.Pb) !== 0         ? Math.max(0, Math.min(1, (max_Pb - row.Pb) / (max_Pb - reRow.Pb))) : 0;
+
+                // [Eq. 3] Synthesis via Holistically Balanced Domain Means
+                const outputRSI = (z_floral + z_faunal + z_N + z_Pb) / 4;
+
+                document.getElementById(`rsi-cell-${i}`).innerText = outputRSI.toFixed(4);
+
+                if (groupings[row.Site]) {
+                    groupings[row.Site].push(outputRSI);
+                }
+            });
+
+            renderGgplotBoxPlot(groupings);
+        }
+
+        // Generate Plot matching R's ggplot configuration parameters
+        function renderGgplotBoxPlot(groupings) {
+            const ctx = document.getElementById('journalBoxPlot').getContext('2d');
+            
+            // Explicit Factor Levels Sorting
+            const factorLevels = ["UMD", "RS1", "RS2", "RE"];
+            
+            const datasetsData = [{
+                label: 'RSI Value',
+                data: factorLevels.map(lvl => groupings[lvl]),
+                // Mapping custom research colors
+                backgroundColor: [
+                    '#A07135', // UMD Brownish
+                    '#E3C485', // RS1 Light Sandy Yellow
+                    '#71C5C1', // RS2 Teal/Light Blue
+                    '#26827D'  // RE Deep Teal
+                ],
+                borderColor: '#333333',
+                borderWidth: 1.5,
+                outlierBackgroundColor: '#333333',
+                itemRadius: 0 // Retain clean whiskers without noise jitter layout
+            }];
+
+            if (plotObj) {
+                plotObj.data.datasets = datasetsData;
+                plotObj.update();
+            } else {
+                plotObj = new Chart(ctx, {
+                    type: 'boxplot',
+                    data: {
+                        labels: factorLevels,
+                        datasets: datasetsData
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false } // Legend off, matched to R scripts
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                border: { color: 'black', width: 1 },
+                                ticks: { color: 'black', font: { family: 'serif', size: 13 } }
+                            },
+                            y: {
+                                min: 0,
+                                max: 1.1,
+                                border: { color: 'black', width: 1 },
+                                grid: { display: false },
+                                title: {
+                                    display: true,
+                                    text: 'RSI Value',
+                                    color: 'black',
+                                    font: { family: 'serif', size: 14 }
+                                },
+                                ticks: { color: 'black', font: { family: 'serif', size: 12 } }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // System Initialization
+        generateJournalTable();
+        executeEcoRSIWorkflow();
+    </script>
+</body>
+</html>
