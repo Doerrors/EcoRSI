@@ -37,8 +37,8 @@ An **RSI score near 1** means the restoration site closely resembles the referen
 EcoRSI is not yet on CRAN. Install directly from GitHub:
 
 ```r
-# install.packages("devtools")  # if not already installed
-# install.packages("ggplot2")   # if not already installed
+# install.packages("devtools")  # if not already installed*
+# install.packages("ggplot2")   # if not already installed*
 
 devtools::install_github("Doerrors/EcoRSI")
 ```
@@ -46,6 +46,9 @@ devtools::install_github("Doerrors/EcoRSI")
 Then load it:
 
 ```r
+# library(devtools)   # load if not already done*
+# library(ggplot2)    # load if not already done*
+
 library(EcoRSI)
 ```
 
